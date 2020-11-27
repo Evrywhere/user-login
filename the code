@@ -1,0 +1,96 @@
+
+     #Write a program that works with two text fies, user.txt and task.tx
+     #Program to retrieve the username of the person the task is asigned
+     # The title of the task
+     # A descrition of the task
+     #The date of the task was asgined to the user
+     #Either 'yes' or 'no' value that specifies if the task has been completed
+
+
+#random libary to allow choice function
+from random import choice
+
+
+
+user_file = open("user.txt" , "r+")
+login = False
+
+while login == False:
+#ask user for credentials, ie password, and name
+     username = input("Enter your user name: ")
+     password = input ("Enter your password: ")
+
+
+     for line in user_file:
+     
+          valid_user, valid_password = line.split(", ")
+
+          if username == valid_user and password == valid_password:
+           login = True
+           print("You are logged in \n")
+ 
+     if login ==False:
+          print("Incorrect login details! Please enter a valid user name and pasword")
+     user_file.seek(0)
+     
+
+print(login)
+
+
+todo_file = open ("tasks.txt", "r+")
+choice =input("""
+Please select one of the following options:
+    r - register user    
+    a - add task         
+    va - view all tasks  
+    vm - view my tasks  
+    e - exit             \n""")
+
+
+#user chooses to register a user to user.xt
+if choice =="r":
+     
+     user_file = open ("user.txt", "a+")
+     new_user = input("Enter name of the newuser to be registered: ")
+     new_pw   = input("Enter a password for the new user: ")
+     
+
+     user_file.write (f"\n{new_user}, {new_pw}" )
+     user_file.close()
+
+#TASK 2 -- a
+# Add a task
+
+if choice == "a":
+     task_file = open ("tasks.txt", "a+")
+
+     task_name = input("Enter the name of the task: ")
+     user = input(" Enter user this task belongs to: ")
+     start_date = input("Enter the start date: ")
+     end_date = input("Enter the end date: ")
+     task_complete = input("IS the task completed: ")
+
+     task_file.write (f"{task_name},{user},{start_date},{end_date},{task_complete}\n" )
+     task_file.close()
+
+#Task 3 -- va
+#View all tasks
+
+if choice == "va":
+     task_file = open ("tasks.txt", "r")
+
+     for line in task_file:
+          task_name,user,start_date,end_date,task_complete = line.split(",")
+
+     #if username =task_name:
+
+          print (f"""
+          Name: {task_name}
+          User: {user}
+          Start Date: {start_date}
+          End Date: {end_date}
+          Task completed: {task_complete}
+          """)
+   
+
+task_file.close()
